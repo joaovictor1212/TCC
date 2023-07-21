@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route('/')
 def login():
     try:
-        return render_template('auth.html')
+        return render_template('/auth/login.html')
     except Exception as e:
         print("Error:", e)
         raise e
@@ -15,11 +15,18 @@ def login():
 @app.route('/cadastro')
 def cadastro():
     try:
-        return render_template('cadastro.html')
+        return render_template('/auth/cadastro.html')
     except Exception as e:
         print("Error:", e)
         raise e
 
+@app.route('/recuperar')
+def recuperar():
+    try:
+        return render_template('/auth/recuperar.html')
+    except Exception as e:
+        print("Error:", e)
+        raise e
 
 
 @app.route('/widgets')
