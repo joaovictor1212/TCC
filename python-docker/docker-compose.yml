@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+ web:
+  build:
+   context: .
+  ports:
+  - 8000:5000
+  volumes:
+  - ./:/app
+
+ mysqldb:
+  image: mysql
+  ports:
+  - 3306:3306
+  environment:
+  - MYSQL_ROOT_PASSWORD=p@ssw0rd1
+  volumes:
+  - mysql:/var/lib/mysql
+  - mysql_config:/etc/mysql
+
+volumes:
+  mysql:
+  mysql_config:
+
+
+
+
+
+# services:
+#     app:
+#         image: python-docker-web
+#         command: python3 -m flask run --host=127.0.0.1 --port=5000
+#         ports:
+#             - 8000:5000
+#      #    working_dir: /app
+#         volumes:
+#             - ./:/app
+#         build: 
+#             context: .
+#             dockerfile: Dockerfile
+
+#     mysqldb:
+#         image: mysql
+#         ports:
+#         - 3306:3306
+#         environment:
+#         - MYSQL_ROOT_PASSWORD=p@ssw0rd1
+#         volumes:
+#         - mysql:/var/lib/mysql
+#         - mysql_config:/etc/mysql
+
+# volumes:
+#   mysql:
+#   mysql_config:
+
+
+
+
+
