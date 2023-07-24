@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Tela de login</title>
+        <title>Registros padrões</title>
         <style>
             body{
                 font-family: Arial, Helvetica, sans-serif;
@@ -16,7 +16,7 @@
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%,-50%);
-                padding: 80px;
+                padding: 180px;
                 border-radius: 15px;
                 color: #fff;
             }
@@ -47,16 +47,30 @@
     </head>
     <body>
         <div>
-            <h1>Login</h1>
-            <input type="email" name="email" title="E-mail" placeholder="E-mail">
+            <h1>Cadastro do Padrão</h1>   
+            <label for="imagem">Selecione a imagem:</label>
+            <input type="file" id="imagem" name="imagem" accept="image/*">
             <br><br>
-            <input type="password" name="senha" title="Senha" placeholder="Senha">
+            <label for="coordenanda_x">Insira a coordenada X</label>
+            <input type="number" name="coordenanda_x" title="Coordenanda - X" placeholder="x.xxxx">
             <br><br>
-            <button><a href="/registros">Entrar</a></button>
+            <label for="coordenanda_y">Insira a coordenada Y</label>
+            <input type="number" name="coordenanda_y" title="Coordenanda - Y" placeholder="x.xxxx">
             <br><br>
-            <a href="/cadastro">Criar usuário</a>
-            <br><br>
-            <a href="/recuperar">Esqueceu a senha</a>
+            <button id="salveButton">Salvar</button>
+            
         </div>
+
     </body>
+    <script>
+        // JavaScript code to handle the button click event
+        document.getElementById("saveButton").addEventListener("click", function() {
+        // Your code to be executed when the button is clicked goes here
+        // For example, you can call a function or perform some actions
+        // like saving data to a server, updating the page, etc.
+        // Replace the following alert with your specific actions.
+        alert("Button clicked!");
+    });
+    </script>
+
 </html>

@@ -28,6 +28,13 @@ def recuperar():
         print("Error:", e)
         raise e
 
+@app.route('/registros')
+def cadastro_padrao():
+    try:
+        return render_template('/principal/registros.html')
+    except Exception as e:
+        print("Error:", e)
+        raise e
 
 @app.route('/widgets')
 def get_widgets():
