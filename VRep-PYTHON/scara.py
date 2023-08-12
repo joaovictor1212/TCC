@@ -4,8 +4,7 @@ from math import degrees, radians
 
 import sys
 
-sys.path.append(
-    "/home/joaovictor/ADS/TCC/CoppeliaSim_Edu_V4_3_0_rev12_Ubuntu20_04/programming/zmqRemoteApi/clients/python")
+sys.path.append("/home/adduser/ADS/TCC/CoppeliaSim_Edu_V4_3_0_rev12_Ubuntu20_04/programming/zmqRemoteApi/clients/python")
 
 from zmqRemoteApi import RemoteAPIClient
 

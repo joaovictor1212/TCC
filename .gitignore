@@ -1,0 +1,13 @@
+# Ignorar arquivos de configuração do ambiente virtual
+venv/
+env/
+*.pyc
+__pycache__/
+
+# Ignorar arquivos de cache
+*.swp
+.DS_Store
+
+# Ignorar arquivos e pastas específicos do V-REP ou pyrep
+V-REP/
+pyrep.log

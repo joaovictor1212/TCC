@@ -43,13 +43,17 @@
             a{
                 color: whitesmoke
             }
+            #fileInput{
+                display: none;
+            }
         </style>
     </head>
     <body>
         <div>
             <h1>Cadastro do Padrão</h1>   
-            <label for="imagem">Selecione a imagem:</label>
-            <input type="file" id="imagem" name="imagem" accept="image/*">
+            <div class="selectedFiles"></div>
+            <input type="file" id="fileInput" name="fileInput" accept="image/*">
+            <button id="openFileButton">Selecionar o Padrão</button>
             <br><br>
             <label for="coordenanda_x">Insira a coordenada X</label>
             <input type="number" name="coordenanda_x" title="Coordenanda - X" placeholder="x.xxxx">
@@ -57,20 +61,34 @@
             <label for="coordenanda_y">Insira a coordenada Y</label>
             <input type="number" name="coordenanda_y" title="Coordenanda - Y" placeholder="x.xxxx">
             <br><br>
-            <button id="salveButton">Salvar</button>
+            <button type="submit" id="salveButton">Salvar</button>
             
         </div>
 
+        <script>
+            // custom-upload.js
+            document.addEventListener('DOMContentLoaded', function() {
+                const fileInput = document.getElementById('fileInput');
+                const saveButton = document.getElementById('salveButton');
+                const openFileButton = document.getElementById('openFileButton');
+                const selectedFiles = document.getElementById('selectedFiles')
+
+                openFileButton.addEventListener('click', function() {
+                    fileInput.click();
+                });
+
+                saveButton.addEventListener('click', function() {
+                    // Obter os valores dos campos
+                    const coordenandaX = document.querySelector('input[name="coordenanda_x"]').value;
+                    const coordenandaY = document.querySelector('input[name="coordenanda_y"]').value;
+
+                    // Fazer algo com os valores (por exemplo, enviar para um servidor)
+                    console.log('Coordenadas X:', coordenandaX);
+                    console.log('Coordenadas Y:', coordenandaY);
+                });
+            });
+
+        </script>
     </body>
-    <script>
-        // JavaScript code to handle the button click event
-        document.getElementById("saveButton").addEventListener("click", function() {
-        // Your code to be executed when the button is clicked goes here
-        // For example, you can call a function or perform some actions
-        // like saving data to a server, updating the page, etc.
-        // Replace the following alert with your specific actions.
-        alert("Button clicked!");
-    });
-    </script>
 
 </html>
