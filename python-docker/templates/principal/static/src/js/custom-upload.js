@@ -1,7 +1,8 @@
-// custom-upload.js
 document.addEventListener('DOMContentLoaded', function() {
     const fileInput = document.getElementById('fileInput');
     const saveButton = document.getElementById('salveButton');
+    const selectedFiles = document.getElementById('selectedFiles')
+
 
     saveButton.addEventListener('click', function() {
         // Obter os valores dos campos

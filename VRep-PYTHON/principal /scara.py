@@ -1,12 +1,13 @@
 import time
 from decimal import Decimal
 from math import degrees, radians
+from coppeliasim_zmqremoteapi_client import *
 
 import sys
 
-sys.path.append("/home/adduser/ADS/TCC/CoppeliaSim_Edu_V4_3_0_rev12_Ubuntu20_04/programming/zmqRemoteApi/clients/python")
+# sys.path.append("/home/adduser/ADS/TCC/CoppeliaSimEdu/programming/zmqRemoteApi/clients/python")
 
-from zmqRemoteApi import RemoteAPIClient
+# from zmqRemoteApi import RemoteAPIClient
 
 # Configurações Globais de Operação do Robô
 tamanho_elo_1 = 0.4670
@@ -22,6 +23,7 @@ client.setStepping(False)
 axis_A = sim.getObject("/MTB/axis")
 axis_B = sim.getObject("/MTB/axis/link/axis")
 tool = sim.getObject("/MTB/axis/link/axis/link/axis/axis/link/link3Respondable/suctionPad/BodyRespondable")
+camera = sim.getObject("/Vision_sensor")
 
 # max_speed = 6.28
 # sim.setJointTargetVelocity(axis_A, 0, [max_speed, max_speed])
@@ -109,3 +111,8 @@ def moveJ(t1, t2, interpolation=True):
             break
 
         client.step()
+
+
+def get_camera():
+    img, res = sim.getVisionSensorImg(camera)
+    sim.saveImage(img, res, 0, "images/camera.png", -1)

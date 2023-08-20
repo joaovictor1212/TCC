@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./CoppeliaSim_Edu_V4_3_0_rev12_Ubuntu20_04/programming/legacyRemoteApi/remoteApiBindings/python/python"
+    ]
+}

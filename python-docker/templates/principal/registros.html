@@ -43,17 +43,15 @@
             a{
                 color: whitesmoke
             }
-            #fileInput{
-                display: none;
-            }
+            
         </style>
     </head>
     <body>
         <div>
-            <h1>Cadastro do Padrão</h1>   
-            <div class="selectedFiles"></div>
-            <input type="file" id="fileInput" name="fileInput" accept="image/*">
-            <button id="openFileButton">Selecionar o Padrão</button>
+            <h3>Cadastro do Padrão</h3> 
+            <br/>
+            <label for="">Insira o padrão</label>  
+            <input type="file" id="fileInput" tile="Padrão" placeholder="Escolha o padrão" accept="image/*">
             <br><br>
             <label for="coordenanda_x">Insira a coordenada X</label>
             <input type="number" name="coordenanda_x" title="Coordenanda - X" placeholder="x.xxxx">
@@ -70,13 +68,9 @@
             document.addEventListener('DOMContentLoaded', function() {
                 const fileInput = document.getElementById('fileInput');
                 const saveButton = document.getElementById('salveButton');
-                const openFileButton = document.getElementById('openFileButton');
                 const selectedFiles = document.getElementById('selectedFiles')
 
-                openFileButton.addEventListener('click', function() {
-                    fileInput.click();
-                });
-
+            
                 saveButton.addEventListener('click', function() {
                     // Obter os valores dos campos
                     const coordenandaX = document.querySelector('input[name="coordenanda_x"]').value;
