@@ -10,18 +10,22 @@ services:
   - ./:/app
 
  mysqldb:
-  image: mysql:latest
-  container_name: app-banco
+  image: mysql:8.0.29
+  container_name: app_banco
   ports:
   - 3306:3306
   environment:
   - MYSQL_ROOT_PASSWORD=p@ssw0rd1
-  - MYSQL_USERNAME=root
-  - MYSQL_ROOT_DATABASE=arroz
+  - MYSQL_DATABASE=tcc
   volumes:
   - mysql:/var/lib/mysql
   - mysql_config:/etc/mysql
 
+# MATAR AS IMAGENS E OS CONTAINER RODANDO
+# MATAR OS VOLUMES CRIADOS ANTES DE SUBIR DE NOVO
+# DEPOIS RODAR OS COMANDOS A SEGUIR
+# docker-compose down
+# docker-compose up -d --build
 volumes:
   mysql:
   mysql_config:
