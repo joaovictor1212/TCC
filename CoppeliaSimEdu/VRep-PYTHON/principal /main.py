@@ -10,7 +10,8 @@ scara.start()
 scara.get_camera()
 
 # Primeiros testes de identificação de padrões
-img_rgb = cv.imread("/home/adduser/ADS/TCC/CoppeliaSimEdu/images/camera.png")
+# ======================= Ajustar o caminho que pega a imagem ========================
+img_rgb = cv.imread("/home/jvoliveira/Documentos/João/ADS/TCC/CoppeliaSimEdu/images/camera.png")
 
 assert img_rgb is not None, "file could not be read, check with os.path.exists()"
 img_gray = cv.cvtColor(img_rgb, cv.COLOR_BGR2GRAY)
