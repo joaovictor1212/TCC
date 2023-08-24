@@ -10,11 +10,14 @@ services:
   - ./:/app
 
  mysqldb:
-  image: mysql
+  image: mysql:latest
+  container_name: app-banco
   ports:
   - 3306:3306
   environment:
   - MYSQL_ROOT_PASSWORD=p@ssw0rd1
+  - MYSQL_USERNAME=root
+  - MYSQL_ROOT_DATABASE=arroz
   volumes:
   - mysql:/var/lib/mysql
   - mysql_config:/etc/mysql
