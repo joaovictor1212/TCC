@@ -5,63 +5,26 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Registros padrões</title>
-        <style>
-            body{
-                font-family: Arial, Helvetica, sans-serif;
-                background-image: linear-gradient(45deg, cyan, yellow);
-            }
-            div{
-                background-color: rgba(0, 0, 0, 0.9);
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%,-50%);
-                padding: 180px;
-                border-radius: 15px;
-                color: #fff;
-            }
-            input{
-                padding: 15px;
-                border: none;
-                outline: none;
-                font-size: 15px;
-            }
-            button{
-                background-color: dodgerblue;
-                border: none;
-                padding: 15px;
-                width: 100%;
-                border-radius: 10px;
-                color: white;
-                font-size: 15px;
-                
-            }
-            button:hover{
-                background-color: deepskyblue;
-                cursor: pointer;
-            }
-            a{
-                color: whitesmoke
-            }
-            
-        </style>
+        <link rel="stylesheet" type="text/css" href="static/src/css/registros.css" media="screen"/>
     </head>
     <body>
-        <div>
-            <h3>Cadastro do Padrão</h3> 
-            <br/>
-            <label for="">Insira o padrão</label>  
-            <input type="file" id="fileInput" tile="Padrão" placeholder="Escolha o padrão" accept="image/*">
-            <br><br>
-            <label for="coordenanda_x">Insira a coordenada X</label>
-            <input type="number" name="coordenanda_x" title="Coordenanda - X" placeholder="x.xxxx">
-            <br><br>
-            <label for="coordenanda_y">Insira a coordenada Y</label>
-            <input type="number" name="coordenanda_y" title="Coordenanda - Y" placeholder="x.xxxx">
-            <br><br>
-            <button type="submit" id="salveButton">Salvar</button>
-            
-        </div>
+        <fom action="/registros" method="post" id="registros">
+            <div>
+                <h3>Cadastro do Padrão</h3> 
+                <br/>
+                <label for="">Insira o padrão</label>  
+                <input type="file" id="fileInput" tile="Padrão" placeholder="Escolha o padrão" accept="image/*">
+                <br><br>
+                <label for="coordenanda_x">Insira a coordenada X</label>
+                <input type="number" name="coordenanda_x" title="Coordenanda - X" placeholder="x.xxxx">
+                <br><br>
+                <label for="coordenanda_y">Insira a coordenada Y</label>
+                <input type="number" name="coordenanda_y" title="Coordenanda - Y" placeholder="x.xxxx">
+                <br><br>
+                <button type="submit" id="salveButton">Salvar</button>
+                
+            </div>
+        </fom>
 
         <script>
             // custom-upload.js
