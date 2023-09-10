@@ -5,27 +5,25 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Registros padrões</title>
-        <link rel="stylesheet" type="text/css" href="static/src/css/registros.css" media="screen"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='src/css/registros.css') }}" />
     </head>
-    <body>
-        <fom action="/registros" method="post" id="registros">
+    <body id="body">
             <div>
-                <h3>Cadastro do Padrão</h3> 
-                <br/>
-                <label for="">Insira o padrão</label>  
-                <input type="file" id="fileInput" tile="Padrão" placeholder="Escolha o padrão" accept="image/*">
-                <br><br>
-                <label for="coordenanda_x">Insira a coordenada X</label>
-                <input type="number" name="coordenanda_x" title="Coordenanda - X" placeholder="x.xxxx">
-                <br><br>
-                <label for="coordenanda_y">Insira a coordenada Y</label>
-                <input type="number" name="coordenanda_y" title="Coordenanda - Y" placeholder="x.xxxx">
-                <br><br>
-                <button type="submit" id="salveButton">Salvar</button>
-                
+                <form action="/registros" method="post" enctype="multipart/form-data">
+                    <h3>Cadastro do Padrão</h3> 
+                    <br/>
+                    <label for="">Insira o padrão</label>  
+                    <input type="file" id="fileInput" name="arquivo" placeholder="Escolha o padrão" accept="image/*">
+                    <br><br>
+                    <label for="coordenanda_x">Insira a coordenada X</label>
+                    <input type="number" name="coordenada_x" title="Coordenanda - X" placeholder="x.xxxx">
+                    <br><br>
+                    <label for="coordenanda_y">Insira a coordenada Y</label>
+                    <input type="number" name="coordenada_y" title="Coordenanda - Y" placeholder="x.xxxx">
+                    <br><br>
+                    <button type="submit" id="salveButton">Salvar</button>
+                </form>
             </div>
-        </fom>
-
         <script>
             // custom-upload.js
             document.addEventListener('DOMContentLoaded', function() {

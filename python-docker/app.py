@@ -1,7 +1,8 @@
 import mysql.connector
 import json
 from flask import Flask, render_template, request, redirect, url_for
-app = Flask(__name__)
+
+app = Flask(__name__, static_url_path='/static')
 
 
 @app.route('/')
@@ -15,6 +16,7 @@ def login():
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
     try:
+        cadastro_usuario()
         if request.method == 'POST':
             # Get user data from the form
             nome = request.form['nome']
@@ -55,40 +57,45 @@ def recuperar():
         print("Error:", e)
         raise e
 
-@app.route('/registros')
-def cadastro_padrao():
+@app.route('/registros', methods=['GET','POST'])
+def registros():
     try:
+        cadastro_registros()
+        if request.method == 'POST':
+            arquivo = request.files['arquivo'].read()
+            coordenada_x = request.form['coordenada_x']
+            coordenada_y = request.form['coordenada_y']
+
+             # Connect to the MySQL database
+            mydb = mysql.connector.connect(
+                host="mysqldb",
+                user="root",
+                password="p@ssw0rd1",
+                database="tcc"
+            )
+            cursor = mydb.cursor()
+
+            # Insert user data into the usuarios table
+            insert_query = "INSERT INTO registros (arquivo, coordenada_x, coordenada_y) VALUES (%s, %s, %s)"
+            user_data = (arquivo, coordenada_x, coordenada_y)
+            cursor.execute(insert_query, user_data)
+            mydb.commit()
+
+            cursor.close()
+            mydb.close()
+
+            return redirect(url_for('registros'))
+
         return render_template('/principal/registros.html')
+    
     except Exception as e:
         print("Error:", e)
         raise e
 
-# @app.route('/users')
-# def get_widgets():
-#     mydb = mysql.connector.connect(
-#         host="mysqldb",
-#         user="root",
-#         password="p@ssw0rd1",
-#         database="tcc"
-#     )
-#     cursor = mydb.cursor()
 
 
-#     cursor.execute("SELECT * FROM widgets")
-
-#     row_headers=[x[0] for x in cursor.description] #this will extract row headers
-
-#     results = cursor.fetchall()
-#     json_data=[]
-#     for result in results:
-#         json_data.append(dict(zip(row_headers,result)))
-
-#     cursor.close()
-
-#     return json.dumps(json_data)
-
-@app.route('/initdb')
-def db_init():
+@app.route('/initdb', methods=['GET','POST'])
+def cadastro_usuario():
    
     # Após criar o banco de dados, você precisa se conectar novamente para usá-lo
     mydb = mysql.connector.connect(
@@ -99,9 +106,29 @@ def db_init():
     )
     cursor = mydb.cursor()
 
-    cursor.execute("CREATE TABLE usuarios (  id INT AUTO_INCREMENT PRIMARY KEY, nome VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, senha VARCHAR(255) NOT NULL)")
+    cursor.execute("CREATE TABLE IF NOT EXISTS usuarios (  id INT AUTO_INCREMENT PRIMARY KEY, nome VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, senha VARCHAR(255) NOT NULL);")
     
-    cursor.execute("CREATE TABLE registros (  id INT AUTO_INCREMENT PRIMARY KEY, arquivo_padrao VARCHAR(255) NOT NULL, coordenada_x DECIMAL(10, 4) NOT NULL, coordenada_y DECIMAL(10, 4) NOT NULL")
+    
+    cursor.close()
+    mydb.close()
+
+    return 'init database'
+
+
+@app.route('/initdb', methods=['GET','POST'])
+def cadastro_registros():
+   
+    # Após criar o banco de dados, você precisa se conectar novamente para usá-lo
+    mydb = mysql.connector.connect(
+        host="mysqldb",
+        user="root",
+        password="p@ssw0rd1",
+        database="tcc"
+    )
+    cursor = mydb.cursor()
+
+   
+    cursor.execute("CREATE TABLE IF NOT EXISTS registros (  id INT AUTO_INCREMENT PRIMARY KEY, arquivo LONGBLOB, coordenada_x DECIMAL(10, 4) NOT NULL, coordenada_y DECIMAL(10, 4) NOT NULL);")
     
     cursor.close()
     mydb.close()

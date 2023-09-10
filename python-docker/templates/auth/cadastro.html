@@ -9,16 +9,18 @@
     </head>
     <body>
         <div>
-            <h1>Cadastro de Usuário</h1>
-            <input type="text" name="nome" title="Nome" placeholder="Nome">
-            <br><br>
-            <input type="email" name="email" title="E-mail" placeholder="E-mail">
-            <br><br>
-            <input type="password" name="senha" title="Senha" placeholder="Senha">
-            <br><br>
-            <button type="submit">Cadastrar</button>
-            <br><br>
-            <a href="/">Voltar</a>
+            <form action="/cadastro"  method="post">
+                <h1>Cadastro de Usuário</h1>
+                <input type="text" name="nome" title="Nome" placeholder="Nome">
+                <br><br>
+                <input type="email" name="email" title="E-mail" placeholder="E-mail">
+                <br><br>
+                <input type="password" name="senha" title="Senha" placeholder="Senha">
+                <br><br>
+                <button type="submit">Cadastrar</button>
+                <br><br>
+                <a href="/">Voltar</a>
+            </form>
         </div>
     </body>
 </html>
