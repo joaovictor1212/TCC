@@ -8,8 +8,8 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='src/css/login.css') }}">
     </head>
     <body id="body">
-        <form action="/login" id="login" method="post">
-            <div id="login">
+        <div id="login">
+            <form action="/login" method="post">
                 <h1>Login</h1>
                 <input type="email" name="email" title="E-mail" placeholder="E-mail" class="input">
                 <br><br>
@@ -20,7 +20,7 @@
                 <a href="/cadastro" class="link">Criar usuário</a>
                 <br><br>
                 <a href="/recuperar" class="link">Esqueceu a senha</a>
+            </form>
             </div>
-        </form>
     </body>
 </html>
