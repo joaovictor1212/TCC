@@ -1,3 +1,49 @@
+# import mysql.connector
+# from flask import Flask
+# from auth_routes import auth_bp
+# from registros_routes import registros_bp
+
+# app = Flask(__name__)
+# app.register_blueprint(auth_bp, url_prefix='/auth')
+# app.register_blueprint(registros_bp, url_prefix='/registros')
+
+# def get_db_connection():
+#     return mysql.connector.connect(
+#         host="mysqldb",
+#         user="root",
+#         password="p@ssw0rd1",
+#         database="tcc"
+#     )
+
+# if __name__ == "__main__":
+#     app.run(host='0.0.0.0')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import mysql.connector
 import json
 from flask import Flask, render_template, request, redirect, url_for
@@ -12,7 +58,9 @@ def login():
     except Exception as e:
         print("Error:", e)
         raise e
-    
+
+
+
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
     try:
@@ -49,6 +97,8 @@ def cadastro():
         print("Error:", e)
         raise e
 
+
+
 @app.route('/recuperar')
 def recuperar():
     try:
@@ -56,6 +106,8 @@ def recuperar():
     except Exception as e:
         print("Error:", e)
         raise e
+
+
 
 @app.route('/registros', methods=['GET','POST'])
 def registros():

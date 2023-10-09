@@ -7,7 +7,7 @@ services:
     ports:
       - 8000:5000
     volumes:
-      - ./:/app
+      - ./:/projetos/app
 
   mysqldb:
     image: mysql:8.0.29
