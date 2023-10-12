@@ -1,6 +1,7 @@
 import mysql.connector
 import json
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
+import base64
 
 app = Flask(__name__)
 
@@ -91,6 +92,42 @@ def registros():
     except Exception as e:
         print("Error:", e)
         raise e
+
+
+@app.route('/api/registros', methods=['GET'])
+def trazer_registros():
+    print("Verificando acesso a rota")
+    if request.method == 'GET':
+     # Connect to the MySQL database
+        mydb = mysql.connector.connect(
+            host="mysqldb",
+            user="root",
+            password="p@ssw0rd1",
+            database="tcc"
+        )
+        cursor = mydb.cursor()
+        query = "SELECT * FROM registros"
+        cursor.execute(query)
+        registros = cursor.fetchall()  # Obtendo todos os registros da consulta
+        cursor.close()
+        mydb.close()
+        
+        # Convertendo registros para um formato serializável (por exemplo, lista de dicionários)
+        registros_serializaveis = []
+        for registro in registros:
+            arquivo_bytes = registro[1]  # Assumindo que o arquivo está no segundo campo da tupla
+            arquivo_base64 = base64.b64encode(arquivo_bytes).decode('utf-8')  # Convertendo para base64
+            registro_dict = {
+                'id': registro[0],
+                'arquivo': arquivo_base64,  # Usando a representação base64 do arquivo
+                'coordenada_x': registro[2],
+                'coordenada_y': registro[3]
+                # Adicione mais campos conforme necessário
+            }
+            registros_serializaveis.append(registro_dict)
+
+        # Retornando os registros como resposta JSON
+        return jsonify(registros_serializaveis)
 
 
 
