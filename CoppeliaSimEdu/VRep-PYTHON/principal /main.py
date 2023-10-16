@@ -37,9 +37,14 @@ if respostas.status_code == 200:
         imagem_np = np.frombuffer(imagem_bytes, np.uint8)
 
         # # Decodificar a matriz para uma imagem usando OpenCV
-        imagem = cv.cvtColor(imagem_np, cv.COLOR_GRAY2BGR)  # Ou cv2.IMREAD_COLOR para uma imagem colorida
-
-    # Exibir a imagem em uma janela usando OpenCV
+       
+        # Ou cv2.IMREAD_COLOR para uma imagem colorida
+        # imagem = cv.cvtColor(imagem_np, cv.COLOR_GRAY2BGR)  
+        
+        # Verificar o imdecode ou o cvtColor
+        imagem = cv.imdecode(imagem_np, cv.IMREAD_COLOR) 
+        
+        # Exibir a imagem em uma janela usando OpenCV
         cv.imshow('Imagem TESTE', imagem)
 
         # Esperar até que uma tecla seja pressionada e fechar a janela
