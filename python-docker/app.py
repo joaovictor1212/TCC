@@ -1,7 +1,7 @@
 import mysql.connector
-import json
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for, jsonify, json
 import base64
+
 
 app = Flask(__name__)
 
@@ -126,8 +126,21 @@ def trazer_registros():
             }
             registros_serializaveis.append(registro_dict)
 
-        # Retornando os registros como resposta JSON
         return jsonify(registros_serializaveis)
+    
+
+@app.route('/lista-registros')
+def lista_registros():
+    resposta = trazer_registros()
+    print(resposta)
+    # result = json.dumps(resposta)
+    # if result:
+    #     try:
+    #         return render_template('/principal/lista-registros.html', registros=result)
+    #     except Exception as e:
+    #         print("Error:", e)
+    #         raise e
+
 
 
 
