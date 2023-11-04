@@ -138,6 +138,7 @@ class ValidationImages:
 
     @staticmethod
     def mapping_imagens_with_template():
+        import pdb;pdb.set_trace()
         assert img_rgb is not None, "file could not be read, check with os.path.exists()"
         img_gray = cv.cvtColor(img_rgb, cv.COLOR_BGR2GRAY)
         template_database, x, y = ValidationImages.get_images_in_database()
@@ -152,10 +153,9 @@ class ValidationImages:
             cv.rectangle(img_rgb, pt, (pt[0] + w, pt[1] + h), color, 2)
         cv.imwrite('/home/adduser/ADS/TCC/CoppeliaSimEdu/images/result.png', img_rgb)
         
-        # import pdb;pdb.set_trace()
         if x and y:
-            x = float(x)
-            y = float(y)
+            int(x) 
+            int(y)
             scara.moveJ(x, y) 
             scara.moveJ((x - x), (y - y)) 
             scara.moveJ((x - x), (0 - y)) 
