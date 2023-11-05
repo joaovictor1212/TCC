@@ -23,7 +23,7 @@ img_rgb = cv.imread("/home/adduser/ADS/TCC/CoppeliaSimEdu/images/vrep.png")
 
 class ValidationImages:
 
-     @staticmethod
+    @staticmethod
     def get_images_in_database():
         respostas = requests.get('http://localhost:8000/api/registros')
         # Verificando se a solicitação foi bem-sucedida (código de status 200)
@@ -72,7 +72,13 @@ class ValidationImages:
         global img_rgb
         assert img_rgb is not None, "file could not be read, check with os.path.exists()"
         img_gray = cv.cvtColor(img_rgb, cv.COLOR_BGR2GRAY)
-        template_database, x, y = ValidationImages.get_images_in_database()
+        data = ValidationImages.get_images_in_database()
+        
+        import pdb;pdb.set_trace()
+        if data:
+            for template_database in data:
+                if template_database:
+                    pass
         template = cv.cvtColor(template_database, cv.COLOR_BGR2GRAY)
         assert template is not None, "file could not be read, check with os.path.exists()"
         altura, largura = template.shape
