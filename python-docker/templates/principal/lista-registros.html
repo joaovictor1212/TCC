@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registros</title>
+</head>
+<body>
+    <h1>Lista de Registros</h1>
+    <ul>
+        {% for registro in registros %}
+            <li>
+                <strong>ID:</strong> {{ registro.id }}<br>
+                <strong>Arquivo:</strong> <img src="data:image/png;base64,{{ registro.arquivo }}" alt="Arquivo"><br>
+                <strong>Coordenada X:</strong> {{ registro.coordenada_x }}<br>
+                <strong>Coordenada Y:</strong> {{ registro.coordenada_y }}<br>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

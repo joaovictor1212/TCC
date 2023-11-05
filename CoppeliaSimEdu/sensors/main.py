@@ -32,6 +32,9 @@ class ValidationImages:
             dados = respostas.json()
 
             for dado in dados:
+                # with open('./teste.txt', 'w') as arquivo:
+                #  # Escrevendo a string no arquivo
+                #     arquivo.write(dado.get('arquivo'))
                 arquivo_base64 = dado.get('arquivo')
                 x = dado.get('coordenada_x')
                 y = dado.get('coordenada_y')
@@ -48,11 +51,11 @@ class ValidationImages:
                 imagem = cv.imdecode(imagem_np, cv.IMREAD_COLOR) 
                 
                 # Exibir a imagem em uma janela usando OpenCV
-                # cv.imshow('Imagem TESTE', imagem)
+                cv.imshow('Imagem TESTE', imagem)
                 # Esperar até que uma tecla seja pressionada e fechar a janela
                 cv.waitKey(0)
                 cv.destroyAllWindows()
-                
+                # template_gray = cv.cvtColor(imagem, cv.COLOR_BGR2GRAY)
                 
             return imagem, x, y
         else:
@@ -135,44 +138,24 @@ class ValidationImages:
 
     @staticmethod
     def mapping_imagens_with_template():
-        global img_rgb
+        import pdb;pdb.set_trace()
         assert img_rgb is not None, "file could not be read, check with os.path.exists()"
         img_gray = cv.cvtColor(img_rgb, cv.COLOR_BGR2GRAY)
         template_database, x, y = ValidationImages.get_images_in_database()
         template = cv.cvtColor(template_database, cv.COLOR_BGR2GRAY)
         assert template is not None, "file could not be read, check with os.path.exists()"
-        altura, largura = template.shape
-        cv.normalize(img_gray, img_gray, 0, 255, cv.NORM_MINMAX)
-        cv.normalize(template, template, 0, 255, cv.NORM_MINMAX)
+        h, w = template.shape
         res = cv.matchTemplate(img_gray, template, cv.TM_CCOEFF_NORMED)
-        # threshold = 0.7
-        # loc = np.where(res >= threshold)
-        # for pt in zip(*loc[::-1]):
-        #     color = (16,78,100)
-        #     cv.rectangle(img_rgb, pt, (pt[0] + w, pt[1] + h), color, 2)
-        # cv.imwrite('/home/adduser/ADS/TCC/CoppeliaSimEdu/images/result.png', img_rgb)
         threshold = 0.8
-        min_val, max_val, min_loc, max_loc = cv.minMaxLoc(res)
+        loc = np.where(res >= threshold)
+        for pt in zip(*loc[::-1]):
+            color = (16,78,100)
+            cv.rectangle(img_rgb, pt, (pt[0] + w, pt[1] + h), color, 2)
+        cv.imwrite('/home/adduser/ADS/TCC/CoppeliaSimEdu/images/result.png', img_rgb)
         
-        if max_val >= threshold:
-            top_left = max_loc
-            # Calculate the center of the square.
-            center = (top_left[0] + largura / 2, top_left[1] + altura / 2)
-            # Move the square to the desired location.
-            center = (center[0] + 100, center[1] + 100)
-            # Update the top_left and bottom_right coordinates of the square.
-            top_left = (int(center[0] - largura / 2), int(center[1] - altura / 2))
-            bottom_right = (top_left[0] + largura, top_left[1] + altura)
-            color = (255, 255, 0)
-            cv.rectangle(img_rgb, top_left, bottom_right, color, 2)
-            cv.imwrite('/home/adduser/ADS/TCC/CoppeliaSimEdu/images/result.png', img_rgb)
-        else:
-            print("Padrão não encontrado.")
-        
-        # import pdb;pdb.set_trace()
         if x and y:
-            x = float(x)
-            y = float(y)
+            int(x) 
+            int(y)
             scara.moveJ(x, y) 
             scara.moveJ((x - x), (y - y)) 
             scara.moveJ((x - x), (0 - y)) 
