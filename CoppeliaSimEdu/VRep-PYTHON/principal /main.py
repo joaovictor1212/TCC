@@ -23,14 +23,15 @@ img_rgb = cv.imread("/home/adduser/ADS/TCC/CoppeliaSimEdu/images/vrep.png")
 
 class ValidationImages:
 
-    @staticmethod
+     @staticmethod
     def get_images_in_database():
         respostas = requests.get('http://localhost:8000/api/registros')
         # Verificando se a solicitação foi bem-sucedida (código de status 200)
         if respostas.status_code == 200:
             # Obtendo os dados da resposta como um dicionário Python
             dados = respostas.json()
-
+            imagens_coordenadas = []
+            count = 0
             for dado in dados:
                 arquivo_base64 = dado.get('arquivo')
                 x = dado.get('coordenada_x')
@@ -38,23 +39,26 @@ class ValidationImages:
                 imagem_bytes = base64.b64decode(arquivo_base64)
                 # # Converter bytes para uma matriz NumPy
                 imagem_np = np.frombuffer(imagem_bytes, np.uint8)
-
                 # # Decodificar a matriz para uma imagem usando OpenCV
             
                 # Ou cv2.IMREAD_COLOR para uma imagem colorida
-                # imagem = cv.cvtColor(imagem_np, cv.COLOR_GRAY2BGR)  
+                imagem = cv.cvtColor(imagem_np, cv.COLOR_GRAY2BGR)  
                 
                 # Verificar o imdecode ou o cvtColor
                 imagem = cv.imdecode(imagem_np, cv.IMREAD_COLOR) 
                 
-                # Exibir a imagem em uma janela usando OpenCV
-                # cv.imshow('Imagem TESTE', imagem)
-                # Esperar até que uma tecla seja pressionada e fechar a janela
-                cv.waitKey(0)
-                cv.destroyAllWindows()
+                dict_image = {
+                    'nome' : count,
+                    'imagem': imagem,
+                    'x': x,
+                    'y': y,
+                }
+                count += 1
+                imagens_coordenadas.append(dict_image)
                 
+            
                 
-            return imagem, x, y
+            return imagens_coordenadas
         else:
             # Se a solicitação não for bem-sucedida, imprima o código de status
             print('Falha na solicitação. Código de status:', respostas.status_code, respostas.text)
