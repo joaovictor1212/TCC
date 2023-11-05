@@ -76,7 +76,7 @@ class ValidationImages:
         
         data = ValidationImages.get_images_in_database()
         
-        import pdb;pdb.set_trace()
+        # import pdb;pdb.set_trace()
         if data:
             for template_database in data:
                 if template_database:
