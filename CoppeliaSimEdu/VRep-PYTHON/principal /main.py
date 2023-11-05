@@ -72,46 +72,51 @@ class ValidationImages:
         global img_rgb
         assert img_rgb is not None, "file could not be read, check with os.path.exists()"
         img_gray = cv.cvtColor(img_rgb, cv.COLOR_BGR2GRAY)
+        cv.normalize(img_gray, img_gray, 0, 255, cv.NORM_MINMAX)
+        
         data = ValidationImages.get_images_in_database()
         
         import pdb;pdb.set_trace()
         if data:
             for template_database in data:
                 if template_database:
-                    pass
-        template = cv.cvtColor(template_database, cv.COLOR_BGR2GRAY)
-        assert template is not None, "file could not be read, check with os.path.exists()"
-        altura, largura = template.shape
-        cv.normalize(img_gray, img_gray, 0, 255, cv.NORM_MINMAX)
-        cv.normalize(template, template, 0, 255, cv.NORM_MINMAX)
-        res = cv.matchTemplate(img_gray, template, cv.TM_CCOEFF_NORMED)
+                    template = cv.cvtColor(template_database.get('imagem'), cv.COLOR_BGR2GRAY)
+                    assert template is not None, "file could not be read, check with os.path.exists()"
+                    altura, largura = template.shape
+                    cv.normalize(template, template, 0, 255, cv.NORM_MINMAX)
+
+                    
+                    res = cv.matchTemplate(img_gray, template, cv.TM_CCOEFF_NORMED)
+                    
+                    threshold = 0.8
+                    min_val, max_val, min_loc, max_loc = cv.minMaxLoc(res)
+                    
+                    if max_val >= threshold:
+                        top_left = max_loc
+                        # Calculate the center of the square.
+                        center = (top_left[0] + largura / 2, top_left[1] + altura / 2)
+                        # Move the square to the desired location.
+                        center = (center[0] + 100, center[1] + 100)
+                        # Update the top_left and bottom_right coordinates of the square.
+                        top_left = (int(center[0] - largura / 2), int(center[1] - altura / 2))
+                        bottom_right = (top_left[0] + largura, top_left[1] + altura)
+                        color = (255, 255, 0)
+                        cv.rectangle(img_rgb, top_left, bottom_right, color, 2)
+                        cv.imwrite('/home/adduser/ADS/TCC/CoppeliaSimEdu/images/result.png', img_rgb)
+                    else:
+                        print("Padrão não encontrado.")
+                        continue    
+                    
         
-        threshold = 0.8
-        min_val, max_val, min_loc, max_loc = cv.minMaxLoc(res)
-        
-        if max_val >= threshold:
-            top_left = max_loc
-            # Calculate the center of the square.
-            center = (top_left[0] + largura / 2, top_left[1] + altura / 2)
-            # Move the square to the desired location.
-            center = (center[0] + 100, center[1] + 100)
-            # Update the top_left and bottom_right coordinates of the square.
-            top_left = (int(center[0] - largura / 2), int(center[1] - altura / 2))
-            bottom_right = (top_left[0] + largura, top_left[1] + altura)
-            color = (255, 255, 0)
-            cv.rectangle(img_rgb, top_left, bottom_right, color, 2)
-            cv.imwrite('/home/adduser/ADS/TCC/CoppeliaSimEdu/images/result.png', img_rgb)
-        else:
-            print("Padrão não encontrado.")
         
         
-        if x and y:
-            x = float(x)
-            y = float(y)
-            scara.moveJ(x, y) 
-            scara.moveJ((x - x), (y - y)) 
-            scara.moveJ((x - x), (0 - y)) 
-            scara.moveJ((x - x), (y - y)) 
+        # if x and y:
+        #     x = float(x)
+        #     y = float(y)
+        #     scara.moveJ(x, y) 
+        #     scara.moveJ((x - x), (y - y)) 
+        #     scara.moveJ((x - x), (0 - y)) 
+        #     scara.moveJ((x - x), (y - y)) 
 
 
 
