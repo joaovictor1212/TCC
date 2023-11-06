@@ -90,38 +90,50 @@ class ValidationImages:
                     
                     threshold = 0.8
                     min_val, max_val, min_loc, max_loc = cv.minMaxLoc(res)
-                    
+                    nome = template_database.get('nome')
                     if max_val >= threshold:
-                        top_left = max_loc
-                        # Calculate the center of the square.
-                        center = (top_left[0] + largura / 2, top_left[1] + altura / 2)
-                        # Move the square to the desired location.
-                        center = (center[0] + 100, center[1] + 100)
-                        # Update the top_left and bottom_right coordinates of the square.
-                        top_left = (int(center[0] - largura / 2), int(center[1] - altura / 2))
-                        bottom_right = (top_left[0] + largura, top_left[1] + altura)
-                        color = (255, 255, 0)
-                        cv.rectangle(img_rgb, top_left, bottom_right, color, 2)
-                        cv.imwrite('/home/adduser/ADS/TCC/CoppeliaSimEdu/images/result.png', img_rgb)
+                        ValidationImages.create_result_image(nome=nome, max_loc=max_loc, img_rgb=img_rgb, largura=largura, altura=altura)
+                        ValidationImages.move_in_vrep(coordenada_x=template_database.get('x'), coordenada_y=template_database.get('y'))
+						
                     else:
-                        print("Padrão não encontrado.")
+                        print("Padrão %s não conseguiu realizar o macthTemplate." %nome)
                         continue    
                     
-        
-        
-        
-        # if x and y:
-        #     x = float(x)
-        #     y = float(y)
-        #     scara.moveJ(x, y) 
-        #     scara.moveJ((x - x), (y - y)) 
-        #     scara.moveJ((x - x), (0 - y)) 
-        #     scara.moveJ((x - x), (y - y)) 
+    
+    @staticmethod
+    def move_in_vrep(coordenada_x, coordenada_y):
+        import pdb;pdb.set_trace()
+        if coordenada_x and coordenada_y:
+            x = float(coordenada_x)
+            y = float(coordenada_y)
+            scara.moveJ(x, y)
+            scara.moveJ((x - x), (y - y)) 
+            scara.moveJ((x - x), (0 - y)) 
+            scara.moveJ((x - x), (y - y))
+        scara.stop()
+    
+    
+    @staticmethod
+    def create_result_image(max_loc, img_rgb, altura, largura, nome):
+        top_left = max_loc
+        # Calculate the center of the square.
+        center = (top_left[0] + largura / 2, top_left[1] + altura / 2)
+        # Move the square to the desired location.
+        center = (center[0] + 100, center[1] + 100)
+        # Update the top_left and bottom_right coordinates of the square.
+        top_left = (int(center[0] - largura / 2), int(center[1] - altura / 2))
+        bottom_right = (top_left[0] + largura, top_left[1] + altura)
+        color = (255, 255, 0)
+        cv.rectangle(img_rgb, top_left, bottom_right, color, 2)
+        cv.imwrite('/home/adduser/ADS/TCC/CoppeliaSimEdu/images/result.png', img_rgb)
+        print("Padrão %s conseguiu realizar o matchTemplate." %nome)
+
+
 
 
 
 ValidationImages.mapping_imagens_with_template()
-    
+
 
 
 
@@ -142,4 +154,4 @@ ValidationImages.mapping_imagens_with_template()
 
 
 # Finaliza Simulação
-scara.stop()
+# scara.stop()
