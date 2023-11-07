@@ -11,11 +11,11 @@
         <div id="login">
             <form action="/login" method="post">
                 <h2>Login</h2>
-                <input type="email" name="email" title="E-mail" placeholder="E-mail" class="input">
+                <input type="email" name="email" title="E-mail" placeholder="E-mail" class="input" required="required">
                 <br><br>
-                <input type="password" name="senha" title="Senha" placeholder="Senha" class="input">
+                <input type="password" name="senha" title="Senha" placeholder="Senha" class="input" required="required">
                 <br><br>
-                <a href="/registros" class="button">Entrar</a>
+                <button type="submit" id="send">Entrar</button>
                 <br><br>
                 <a href="/cadastro" class="link">Criar usuário</a>
                 <br><br>

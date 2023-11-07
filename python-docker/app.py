@@ -1,18 +1,32 @@
 import mysql.connector
 from flask import Flask, render_template, request, redirect, url_for, jsonify, json
 import base64
-
+import validate_login
 
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def login():
-    try:
-        return render_template('/auth/login.html')
-    except Exception as e:
-        print("Error:", e)
-        raise e
+    app.run(debug=True)
+    error = None  # Variável para armazenar mensagens de erro
+    if request.method == 'POST':
+        email = request.form['email']
+        senha = request.form['senha']
+        try:
+            usuario = validate_login.verificar_credenciais(email, senha)
+            if usuario:
+                # Usuário existe, redirecionar para a página de sucesso ou fazer o que for necessário
+                return redirect(url_for(validate_login.pagina_de_sucesso))  # Use o nome da função, não a variável
+            else:
+                # Usuário não existe, mostrar mensagem de erro
+                error = 'Credenciais inválidas. Tente novamente.'
+        except Exception as e:
+            print("Error:", e)
+            # Trate exceções específicas aqui se necessário
+    # Se chegou aqui, é uma requisição GET ou as credenciais são inválidas
+    return render_template('/auth/login.html', error=error)
+    
     
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
@@ -34,13 +48,16 @@ def cadastro():
             cursor = mydb.cursor()
 
             # Insert user data into the usuarios table
-            insert_query = "INSERT INTO usuarios (nome, email, senha) VALUES (%s, %s, %s)"
-            user_data = (nome, email, senha)
-            cursor.execute(insert_query, user_data)
-            mydb.commit()
+            try:
+                insert_query = "INSERT INTO usuarios (nome, email, senha) VALUES (%s, %s, %s)"
+                user_data = (nome, email, senha)
+                cursor.execute(insert_query, user_data)
+                mydb.commit()
 
-            cursor.close()
-            mydb.close()
+                cursor.close()
+                mydb.close()
+            except Exception as e:
+                print("Não foi possível cadastrar o usuário")
 
             return redirect(url_for('login'))  # Redirect to the login page after successful registration
 
