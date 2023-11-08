@@ -71,7 +71,8 @@ class ValidationImages:
     def mapping_imagens_with_template():
         global img_rgb
         assert img_rgb is not None, "file could not be read, check with os.path.exists()"
-        img_gray = cv.cvtColor(img_rgb, cv.COLOR_BGR2GRAY)
+        img_gray = cv.cvtColor(img_rgb, cv.COLOR_RGB2GRAY)
+        img_gray = cv.bilateralFilter(img_gray, 11,17,17)
         cv.normalize(img_gray, img_gray, 0, 255, cv.NORM_MINMAX)
         
         data = ValidationImages.get_images_in_database()
@@ -80,18 +81,21 @@ class ValidationImages:
         if data:
             for template_database in data:
                 if template_database:
-                    template = cv.cvtColor(template_database.get('imagem'), cv.COLOR_BGR2GRAY)
+                    template = cv.cvtColor(template_database.get('imagem'), cv.COLOR_RGB2GRAY)
+                    template = cv.bilateralFilter(template, 11,17,17)
                     assert template is not None, "file could not be read, check with os.path.exists()"
                     altura, largura = template.shape
                     cv.normalize(template, template, 0, 255, cv.NORM_MINMAX)
 
-                    
+                    print("tamanho imagem vrep",img_gray.shape)
+                    print("tamanho imagem vrep",template.shape)
                     res = cv.matchTemplate(img_gray, template, cv.TM_CCOEFF_NORMED)
                     
                     threshold = 0.8
                     min_val, max_val, min_loc, max_loc = cv.minMaxLoc(res)
                     nome = template_database.get('nome')
-                    if max_val >= threshold:
+                    loc= np.where(res >= threshold)
+                    if loc:
                         ValidationImages.create_result_image(nome=nome, max_loc=max_loc, img_rgb=img_rgb, largura=largura, altura=altura)
                         ValidationImages.move_in_vrep(coordenada_x=template_database.get('x'), coordenada_y=template_database.get('y'))
 						
@@ -102,7 +106,7 @@ class ValidationImages:
     
     @staticmethod
     def move_in_vrep(coordenada_x, coordenada_y):
-        import pdb;pdb.set_trace()
+        # import pdb;pdb.set_trace()
         if coordenada_x and coordenada_y:
             x = float(coordenada_x)
             y = float(coordenada_y)
