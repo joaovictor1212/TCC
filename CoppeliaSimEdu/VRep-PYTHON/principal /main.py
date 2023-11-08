@@ -15,7 +15,7 @@ scara.get_camera()
 
 # Primeiros testes de identificação de padrões
 # ======================= Ajustar o caminho que pega a imagem ========================
-img_rgb = cv.imread("/home/adduser/ADS/TCC/CoppeliaSimEdu/images/vrep.png")
+img_rgb = cv.imread("/home/jvoliveira/Documentos/João/ADS/TCC/CoppeliaSimEdu/images/vrep.png")
 
 
 # Fazendo uma solicitação GET para o URL
@@ -41,11 +41,17 @@ class ValidationImages:
                 imagem_np = np.frombuffer(imagem_bytes, np.uint8)
                 # # Decodificar a matriz para uma imagem usando OpenCV
             
-                # Ou cv2.IMREAD_COLOR para uma imagem colorida
-                imagem = cv.cvtColor(imagem_np, cv.COLOR_GRAY2BGR)  
+                # # Ou cv2.IMREAD_COLOR para uma imagem colorida
+                # imagem = cv.cvtColor(imagem_np, cv.COLOR_GRAY2BGR)  
                 
                 # Verificar o imdecode ou o cvtColor
                 imagem = cv.imdecode(imagem_np, cv.IMREAD_COLOR) 
+                
+                # Exibir a imagem em uma janela usando OpenCV
+                cv.imshow('Imagem TESTE', imagem)
+                # Esperar até que uma tecla seja pressionada e fechar a janela
+                cv.waitKey(0)
+                cv.destroyAllWindows()
                 
                 dict_image = {
                     'nome' : count,
