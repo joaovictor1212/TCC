@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Registro</title>
+</head>
+<body>
+    <h1>Editar Registro</h1>
+    <form method="post">
+        <label for="arquivo">Novo Arquivo:</label>
+        <input type="text" id="arquivo" name="arquivo" value="{{ registro['arquivo'] }}" required>
+        
+        <label for="arquivo_novo">Novo Arquivo:</label>
+        <input type="text" id="arquivo_novo" name="arquivo_novo" value="{{ registro['arquivo_novo'] }}">
+        
+        <label for="coordenada_x">Nova Coordenada X:</label>
+        <input type="number" id="coordenada_x" name="coordenada_x" value="{{ registro['coordenada_x'] }}" required>
+
+        <label for="coordenada_y">Nova Coordenada Y:</label>
+        <input type="number" id="coordenada_y" name="coordenada_y" value="{{ registro['coordenada_y'] }}" required>
+
+        <button type="submit">Salvar Alterações</button>
+    </form>
+</body>
+</html>
