@@ -20,7 +20,64 @@
     height: auto;
 }
 
-#registros-table a {
+#registros-table form i {
     text-decoration: none;
     color: #3498db; /* Cor do link, você pode ajustar conforme necessário */
+}
+
+#create{
+    background-color: dodgerblue;
+    border: none;
+    padding: 10px;
+    width: 50px;
+    border-radius: 10px;
+    color: white;
+    font-size: 0.75rem;
+    
+}
+#create:hover{
+    background-color: deepskyblue;
+    cursor: pointer;
+} 
+
+#create #icon-create{
+    color: whitesmoke;
+}
+
+#edit{
+    background-color: dodgerblue;
+    border: none;
+    padding: 10px;
+    width: 50px;
+    border-radius: 10px;
+    color: white;
+    font-size: 0.75rem;
+    
+}
+#edit:hover{
+    background-color: deepskyblue;
+    cursor: pointer;
+} 
+
+#edit #icon-edit{
+    color:whitesmoke
+}
+
+#delete {
+    background-color: red; /* Cor de fundo branca para o botão */
+    border: none;
+    padding: 10px;
+    width: 50px;
+    border-radius: 10px;
+    color: white; /* Cor azul para o texto do botão */
+    font-size: 0.75rem;
+}
+
+#delete:hover {
+    background-color: red; /* Cor de fundo ao passar o mouse */
+    cursor: pointer;
+}
+
+#delete #icon-delete {
+    color: white; /* Cor branca para o ícone */
 }

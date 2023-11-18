@@ -6,9 +6,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Registros padrões</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='src/css/registros.css') }}" />
+        
     </head>
     <body id="body">
-            <div id="registros">
+        <div id="registros">
+                <a href="/login">
+                    <i class="fas fa-arrow-left" id="icon-sair"></i> Sair
+                </a>
                 <form action="/registros" method="post" enctype="multipart/form-data">
                     <h2>Cadastro do Padrão</h2> 
                     <br/>
@@ -23,7 +27,13 @@
                     <br><br>
                     <button type="submit" id="salveButton">Salvar</button>
                     <br/><br/>
-                    <a href="/lista-registros">Lista de Registros</a>
+                    <button type="reset" id="reset">Cancelar</button>
+                    <br/><br/><br/>
+                    
+                    <a href="/lista-registros">
+                        <i class="fas fa-list-ul"></i> Lista Registros
+                    </a>
+                    
                 </form>
             </div>
         <script>

@@ -1,55 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registros</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='src/css/lista-registros.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
-    <a href="/registros">
-        <i class="fas fa-arrow-left"></i> Voltar para Registros
-    </a>
-</head>
-<body id='body'>
-    <h1>Lista de Registros</h1>
-    <table id="registros-table">
-        <thead>
-            <tr>
-                <!-- <th>ID</th> -->
-                <th>Arquivo</th>
-                <th>Coordenada X</th>
-                <th>Coordenada Y</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for registro in registros %}
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Registros</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='src/css/lista-registros.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <script type="text/javascript" href="{{ url_for('static', filename='src/js/custom-upload.js')}}"></script>
+        
+        <button class="button" id="create">
+            <a href="/registros">
+                <i class="fas fa-plus" id="icon-create"></i> 
+            </a>
+        </button>
+    </head>
+    <body id='body'>
+        <h1>Lista de Registros</h1>
+        <table id="registros-table">
+            <thead>
                 <tr>
-                    <!-- <td>{{ registro.id }}</td> -->
-                    <td><img src="data:image/png;base64,{{ registro.arquivo }}" alt="Arquivo"></td>
-                    <td>{{ registro.coordenada_x }}</td>
-                    <td>{{ registro.coordenada_y }}</td>
-                    
-                    <td>
-                        <form method="post" action="{{ url_for('editar_registro', registro_id=registro.id) }}">
-                            <button type="submit">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                        </form>
-                    </td>
-                    <td>
-                        <form method="post" action="{{ url_for('excluir_registro', registro_id=registro.id) }}">
-                            <button type="submit">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </form>
-                    </td>
+                    <th>Arquivo</th>
+                    <th>Coordenada X</th>
+                    <th>Coordenada Y</th>
+                    <th></th>
+                    <th></th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
+            </thead>
+            <tbody>
+                {% for registro in registros %}
+                    <tr>
+                        <td><img src="data:image/png;base64,{{ registro.arquivo }}" alt="Arquivo"></td>
+                        <td>{{ registro.coordenada_x }}</td>
+                        <td>{{ registro.coordenada_y }}</td>
+                        
+                        <td>
+                            <form method="get" action="{{ url_for('editar_registro', registro_id=registro.id) }}">
+                                <button type="submit" id="edit">
+                                    <i class="fas fa-edit" id="icon-edit"></i>
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="post" action="{{ url_for('excluir_registro', registro_id=registro.id) }}">
+                                <button type="submit" id="delete">
+                                    <i class="fas fa-trash" id="icon-delete"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
 </html>
