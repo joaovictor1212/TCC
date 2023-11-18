@@ -9,6 +9,9 @@
     </head>
     <body id="body">
         <div id="recuperar">
+            {% if message %}
+                    <p style="color: white;">{{ message }}</p>
+                {% endif %}
             <form action="/recuperar" method="post">
                 <h2>Recuperar a Senha</h2>
                 <input type="email" title="E-mail" name="email" class="input" placeholder="Digite seu email cadastrado">

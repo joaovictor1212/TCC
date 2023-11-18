@@ -2,6 +2,7 @@ import mysql.connector
 from flask import Flask, render_template, request, redirect, url_for, jsonify, json, Response
 import base64
 import os
+import pdb
 
 
 app = Flask(__name__)
@@ -29,7 +30,7 @@ class Login():
             username = request.form['email']
             password = request.form['senha']
             print(username, password)
-            valida  = Login.validar_login(username, password)
+            valida  = Login.validar_login(username=username, password=password)
             if valida:
                 print(valida)
                 # Login bem-sucedido, redirecionar para a página principal ou realizar outras ações necessárias
@@ -59,15 +60,34 @@ class Login():
 
         return usuario is not None
         
-        
-    @app.route('/recuperar')
+    
+    
+    @app.route('/recuperar', methods=['GET','POST'])
     def recuperar():
-        try:
+        if request.method == 'POST':
+            username = request.form['email']
+            senha = Login.get_password(username=username)
+            print(senha)
+            if senha:
+                message = "Sua senha é: %s" %senha
+            return render_template('/auth/recuperar.html', message=message)
+        else:
             return render_template('/auth/recuperar.html')
-        except Exception as e:
-            print("Error:", e)
-            raise e
 
+    
+    def get_password(username):
+        mydb =  MySqlBd.conectar_bd()
+        cursor = mydb.cursor()
+        print(username)
+        query = "SELECT u.senha FROM usuarios u WHERE email = %s"
+        cursor.execute(query, (username,))
+        senha = cursor.fetchone()
+        
+        cursor.close()
+        mydb.close()
+
+        return senha[0] if senha else None
+    
 
     @app.route('/cadastro', methods=['GET', 'POST'])
     def cadastro():
@@ -341,4 +361,4 @@ class Registros():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug=True)
