@@ -115,4 +115,4 @@ def moveJ(t1, t2, interpolation=True):
 
 def get_camera():
     img, res = sim.getVisionSensorImg(camera)
-    sim.saveImage(img, res, 0, "images/vrep.png", -1)
+    sim.saveImage(img, res, 0, "images/vrep.jpg", -1)
