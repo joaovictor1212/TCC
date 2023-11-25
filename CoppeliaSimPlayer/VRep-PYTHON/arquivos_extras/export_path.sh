@@ -1,1 +1,0 @@
-export PYTHONPATH=/Documentos/CoppeliaSim/programming/zmqRemoteApi/clients/python
