@@ -1,13 +1,13 @@
 import time
 from decimal import Decimal
 from math import degrees, radians
-# from coppeliasim_zmqremoteapi_client import *
+from coppeliasim_zmqremoteapi_client import RemoteAPIClient
 
-import sys
-#
-sys.path.append("/home/joao/ADS/TCC/CoppeliaSimEdu/programming/zmqRemoteApi/clients/python")
-#
-from zmqRemoteApi import RemoteAPIClient
+# import sys
+# #
+# sys.path.append("/home/joao/ADS/TCC/CoppeliaSimPlayer/zmqRemoteApi/clients/python")
+# #
+# from zmqRemoteApi import RemoteAPIClient
 
 # Configura cliente de conexão com o CoppeliaSim
 client = RemoteAPIClient()

@@ -92,8 +92,9 @@ class ValidationImages:
                     cv.normalize(template, template, 0, 255, cv.NORM_MINMAX)
 
                     
-                    res = cv.matchTemplate(img_gray, template, cv.TM_CCOEFF_NORMED)
-                    
+                    res = cv.matchTemplate(img_gray, template, cv.TM_SQDIFF)
+                    import pdb;pdb.set_trace()
+
                     threshold = 0.8
                     min_val, max_val, min_loc, max_loc = cv.minMaxLoc(res)
                     nome = template_database.get('nome')
@@ -108,7 +109,6 @@ class ValidationImages:
     
     @staticmethod
     def move_in_vrep(coordenada_x, coordenada_y):
-        import pdb;pdb.set_trace()
         if coordenada_x and coordenada_y:
             x = float(coordenada_x)
             y = float(coordenada_y)
@@ -121,6 +121,7 @@ class ValidationImages:
     
     @staticmethod
     def create_result_image(max_loc, img_rgb, altura, largura, nome):
+        import pdb;pdb.set_trace()
         top_left = max_loc
         # Calculate the center of the square.
         center = (top_left[0] + largura / 2, top_left[1] + altura / 2)
