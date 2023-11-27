@@ -16,7 +16,7 @@ scara.get_camera()
 
 # Primeiros testes de identificação de padrões
 # ======================= Ajustar o caminho que pega a imagem ========================
-img_rgb = cv.imread("/home/joao/ADS/TCC/CoppeliaSimEdu/images/vrep.jpg")
+img_rgb = cv.imread("/home/joao/ADS/TCC/CoppeliaSimEdu/images/vrep.png")
 
 
 # Fazendo uma solicitação GET para o URL
@@ -49,10 +49,10 @@ class ValidationImages:
                 imagem = cv.imdecode(imagem_np, cv.IMREAD_COLOR)
 
                 # Exibir a imagem em uma janela usando OpenCV
-                cv.imshow('Imagem TESTE', imagem)
-                # Esperar até que uma tecla seja pressionada e fechar a janela
-                cv.waitKey(0)
-                cv.destroyAllWindows()
+                # cv.imshow('Imagem TESTE', imagem)
+                # # Esperar até que uma tecla seja pressionada e fechar a janela
+                # cv.waitKey(0)
+                # cv.destroyAllWindows()
 
                 dict_image = {
                     'nome': count,
@@ -70,7 +70,8 @@ class ValidationImages:
 
     @staticmethod
     def mapping_imagens_with_template():
-        import pdb;pdb.set_trace()
+
+        coordenadas = {}
         global img_rgb
         assert img_rgb is not None, "file could not be read, check with os.path.exists()"
         alturaVrep, larguraVrep, channelsVrep = img_rgb.shape
@@ -92,14 +93,25 @@ class ValidationImages:
 
                 minVal, maxVal, minLoc, maxLoc = cv.minMaxLoc(res)
 
+
                 print(minVal, maxVal)
                 if maxVal > 0.8:
-                    ValidationImages.create_result_image(nome=nome, maxLoc=maxLoc, img_rgb=img_rgb,
-                                                         largura=larguraTemplate, altura=alturaTemplate)
-                    ValidationImages.move_in_vrep(coordenada_x=padrao.get('x'), coordenada_y=padrao.get('y'))
+                    result = ValidationImages.create_result_image(nome=nome, maxLoc=maxLoc, img_rgb=img_rgb, largura=larguraTemplate, altura=alturaTemplate)
+                    if result:
+                        coordenadas = {
+                          'nome': nome,
+                          'coordenada_x': padrao.get('x'),
+                          'coordenada_y': padrao.get('y'),
+                        }
                 else:
-                    print("Padrão %s não conseguiu realizar o macthTemplate." % nome)
+                    print("Padrão %s não conseguiu realizar o macthTemplate. \n" % nome)
                     continue
+
+            if coordenadas:
+                print(f"A: {coordenadas['nome']} deu match.")
+                ValidationImages.move_in_vrep(coordenada_x=coordenadas['coordenada_x'], coordenada_y=coordenadas['coordenada_y'])
+            else:
+                scara.stop()
 
 
     @staticmethod
@@ -112,7 +124,9 @@ class ValidationImages:
         color = (255, 0, 0)
         cv.rectangle(img_rgb, (startX, startY), (endX, endY), color, 3)
         cv.imwrite('/home/joao/ADS/TCC/CoppeliaSimEdu/images/result.png', img_rgb)
-        print("Padrão %s conseguiu realizar o matchTemplate." % nome)
+        print("Padrão %s conseguiu realizar o matchTemplate.\n" % nome)
+
+        return True
 
 
 
@@ -121,6 +135,8 @@ class ValidationImages:
         if coordenada_x and coordenada_y:
             x = float(coordenada_x)
             y = float(coordenada_y)
+            print(f"Iniciando movimentacao, nas seguintes coordenadas X: {coordenada_x} e Y: {coordenada_y}")
+
             scara.moveJ(x, y)
             scara.moveJ((x - x), (y - y))
             scara.moveJ((x - x), (0 - y))
