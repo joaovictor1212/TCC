@@ -3,6 +3,8 @@ venv/
 env/
 *.pyc
 __pycache__/
+app.cpython-38.pyc
+
 
 # Ignorar arquivos de cache
 *.swp
