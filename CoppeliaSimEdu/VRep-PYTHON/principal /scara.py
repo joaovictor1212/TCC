@@ -3,21 +3,25 @@ from decimal import Decimal
 from math import degrees, radians
 from coppeliasim_zmqremoteapi_client import *
 
-import sys
-
-# sys.path.append("/home/adduser/ADS/TCC/CoppeliaSimEdu/programming/zmqRemoteApi/clients/python")
-
+# import sys
+#
+# sys.path.append("/home/joao/ADS/TCC/CoppeliaSimEdu/programming/zmqRemoteApi/clients/python")
+#
 # from zmqRemoteApi import RemoteAPIClient
+
+# Configura cliente de conexão com o CoppeliaSim
+client = RemoteAPIClient()
+sim = client.getObject('sim')
+client.setStepping(False)
+
+
 
 # Configurações Globais de Operação do Robô
 tamanho_elo_1 = 0.4670
 tamanho_elo_2 = 0.4005
 precisao = 3
 
-# Configura cliente de conexão com o CoppeliaSim
-client = RemoteAPIClient()
-sim = client.getObject('sim')
-client.setStepping(False)
+
 
 # Adquire handlers para as Juntas do Robô
 axis_A = sim.getObject("/MTB/axis")
@@ -115,4 +119,4 @@ def moveJ(t1, t2, interpolation=True):
 
 def get_camera():
     img, res = sim.getVisionSensorImg(camera)
-    sim.saveImage(img, res, 0, "images/vrep.jpg", -1)
+    sim.saveImage(img, res, 0, "images/vrep.png", -1)
